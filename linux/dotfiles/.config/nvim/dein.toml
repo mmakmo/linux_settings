@@ -33,8 +33,11 @@ repo = 'Shougo/Unite.vim'
 [[plugins]]
 repo = 'Shougo/unite-outline'
 
+#[[plugins]]
+#repo = 'Shougo/neosnippet'
+
 [[plugins]]
-repo = 'Shougo/neosnippet'
+repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]] # カラースキーマ
 repo = 'w0ng/vim-hybrid'
