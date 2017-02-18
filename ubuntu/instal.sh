@@ -21,10 +21,13 @@ pip install --upgrade virtualenv
 pip install --upgrade virtualenvwrapper
 
 git clone https://github.com/yyuu/pyenv.git ~/.pyenv
-echo "export PYENV_ROOT=$HOME/.pyenv" >> ~/.profile
-echo "export PATH='$PYENV_ROOT/bin:$PATH'" >> ~/.profile
-echo 'eval "$(pyenv init -)"' >> ~/.profile
-echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.profile
+git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+echo '
+export PYENV_ROOT=$HOME/.pyenv
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+"source /usr/local/bin/virtualenvwrapper.sh"' >> ~/.profile
 
 echo "# Virtualenvwrapper" >> ~/.profile
 echo "if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then" >> ~/.profile
