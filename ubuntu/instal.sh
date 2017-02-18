@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # install basic packages
-apt install -y aptitude
+apt install -f -y aptitude
 aptitude update -y
 aptitude upgrade -y
 aptitude install -y ssh tmux
@@ -22,14 +22,13 @@ pip install --upgrade virtualenvwrapper
 
 git clone https://github.com/yyuu/pyenv.git ~/.pyenv
 echo "export PYENV_ROOT=$HOME/.pyenv" >> ~/.profile
-echo "export PATH=$PYENV_ROOT/bin:$PATH" >> ~/.profile
+echo "export PATH='$PYENV_ROOT/bin:$PATH'" >> ~/.profile
 echo 'eval "$(pyenv init -)"' >> ~/.profile
 echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.profile
-echo "export WORKON_HOME=~/.virtualenvs" >> ~/.profile
 
 echo "# Virtualenvwrapper" >> ~/.profile
 echo "if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then" >> ~/.profile
-echo "    export WORKON_HOME=$HOME/.virtualenvs" >> ~/.profile
+echo "    export WORKON_HOME='$HOME/.virtualenvs'" >> ~/.profile
 echo "    source /usr/local/bin/virtualenvwrapper.sh" >> ~/.profile
 echo "fi" >> ~/.profile
 
