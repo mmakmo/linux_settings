@@ -1,24 +1,35 @@
 #!/usr/bin/env bash
+# $1 sudu password
+
+# requre sudo password
+if [ "$1" == "" ]; then
+    echo "[warning] require sudo password parameter."
+    exit 1
+fi
+
+# error trap
+set -euo pipefail
+trap "[ERROR] exited with errors." ERR
 
 # install basic packages
-apt install -f -y aptitude
-aptitude update -y
-aptitude upgrade -y
-aptitude install -y ssh tmux
+echo $1 | sudo -S apt install -f -y aptitude
+echo $1 | sudo -S aptitude update -y
+echo $1 | sudo -S aptitude upgrade -y
+echo $1 | sudo -S aptitude install -y ssh tmux
 
 # install development tools
-aptitude install -y git bats vim
+echo $1 | sudo -S aptitude install -y git bats vim
 
 # install neovim
-aptitude install -y software-properties-common
-add-apt-repository -y ppa:neovim-ppa/unstable
+echo $1 | sudo -S aptitude install -y software-properties-common
+echo $1 | sudo -S add-apt-repository -y ppa:neovim-ppa/unstable
 
 # install python environments
-aptitude update -y
-aptitude install -y neovim python-dev python-pip
-pip install --upgrade pip
-pip install --upgrade virtualenv
-pip install --upgrade virtualenvwrapper
+echo $1 | sudo -S aptitude update -y
+echo $1 | sudo -S aptitude install -y neovim python-dev python-pip
+echo $1 | sudo -S pip install --upgrade pip
+echo $1 | sudo -S pip install --upgrade virtualenv
+echo $1 | sudo -S pip install --upgrade virtualenvwrapper
 
 git clone https://github.com/yyuu/pyenv.git ~/.pyenv
 git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
@@ -27,7 +38,7 @@ export PYENV_ROOT=$HOME/.pyenv
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-"source /usr/local/bin/virtualenvwrapper.sh"' >> ~/.profile
+source /usr/local/bin/virtualenvwrapper.sh' >> ~/.profile
 
 echo "# Virtualenvwrapper" >> ~/.profile
 echo "if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then" >> ~/.profile
@@ -42,6 +53,6 @@ echo "export XDG_CONFIG_HOME=~/.config" >> ~/.profile
 #pyenv global anaconda3-4.3.0
 
 # cleanup
-aptitude autoclean
+echo $1 | sudo -S aptitude autoclean
 source ~/.bashrc
 source ~/.profile
