@@ -35,8 +35,18 @@ echo $1 | sudo -S aptitude install -y \
                       liblzma-dev libpcre3-dev curl python-pip
 curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 echo '[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc' >> $HOME/.bashrc
-exec $SHELL
-echo $1 | sudo -S aptitude install -y direnv
+
+## install Golang
+echo $1 | sudo -S add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
+echo $1 | sudo -S aptitude update
+echo $1 | sudo -S aptitude install -y golang
+
+## install direnv
+git clone https://github.com/direnv/direnv $HOME/.cache/direnv
+cd $HOME/.cache/direnv
+echo $1 | sudo -S make install
+
+## install pip and virtualenv
 echo $1 | sudo -S pip install --upgrade pip
 echo $1 | sudo -S pip install --upgrade virtualenv
 
@@ -44,3 +54,4 @@ echo $1 | sudo -S pip install --upgrade virtualenv
 echo $1 | sudo -S aptitude autoclean
 source ~/.bashrc
 source ~/.profile
+exec $SHELL
