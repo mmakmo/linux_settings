@@ -45,6 +45,7 @@ echo $1 | sudo -S aptitude install -y golang
 git clone https://github.com/direnv/direnv $HOME/.cache/direnv
 cd $HOME/.cache/direnv
 echo $1 | sudo -S make install
+echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
 
 ## install pip and virtualenv
 echo $1 | sudo -S pip install --upgrade pip
