@@ -49,8 +49,8 @@ echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
 
 ## install pip and virtualenv
 pip install --upgrade pip
-pip install --upgrade virtualenv
-pip install --upgrade --user neovim
+sudo pip install --upgrade virtualenv
+pip3 install --upgrade --user neovim
 
 # cleanup
 echo $1 | sudo -S aptitude autoclean
