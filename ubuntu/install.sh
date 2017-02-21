@@ -7,54 +7,91 @@ if [ "$1" == "" ]; then
     exit 1
 fi
 
+
 # error trap
 set -euo pipefail
 trap "[ERROR] exited with errors." ERR
 
+abs_dirname() {
+  local cwd="$(pwd)"
+  local path="$1"
+
+  while [ -n "$path" ]; do
+    cd "${path%/*}"
+    local name="${path##*/}"
+    path="$(readlink "$name" || true)"
+  done
+
+  pwd -P
+  cd "$cwd"
+}
+
+SCRIPT_DIR="$(abs_dirname "$0")"
+SUDO_PW=$1
+
+
 # install basic packages
-echo $1 | sudo -S apt install -f -y aptitude
-echo $1 | sudo -S aptitude update -y
-echo $1 | sudo -S aptitude upgrade -y
-echo $1 | sudo -S aptitude install -y ssh tmux
+echo $SUDO_PW | sudo -S apt install -f -y aptitude
+echo $SUDO_PW | sudo -S aptitude update -y
+echo $SUDO_PW | sudo -S aptitude upgrade -y
+echo $SUDO_PW | sudo -S aptitude install -y ssh tmux
+
 
 # install development tools
-echo $1 | sudo -S aptitude install -y git bats vim
+echo $SUDO_PW | sudo -S aptitude install -y git bats vim
+
 
 # install neovim
-echo $1 | sudo -S aptitude install -y software-properties-common
-echo $1 | sudo -S add-apt-repository -y ppa:neovim-ppa/unstable
-echo $1 | sudo -S aptitude update -y
-echo $1 | sudo -S aptitude install -y neovim
+echo $SUDO_PW | sudo -S aptitude install -y software-properties-common
+echo $SUDO_PW | sudo -S add-apt-repository -y ppa:neovim-ppa/unstable
+echo $SUDO_PW | sudo -S aptitude update -y
+echo $SUDO_PW | sudo -S aptitude install -y neovim
 echo "export XDG_CONFIG_HOME=~/.config" >> $HOME/.profile
 
+
 # install python environments
-echo $1 | sudo -S aptitude install -y \
-                      build-essential zlib1g-dev libbz2-dev libssl-dev \
-                      libreadline-dev libncurses5-dev libsqlite3-dev \
-                      libgdbm-dev libdb-dev libexpat-dev libpcap-dev \
-                      liblzma-dev libpcre3-dev curl python-pip \
-                      python3-dev python3-pip
+echo $SUDO_PW | sudo -S aptitude install -y \
+                build-essential zlib1g-dev libbz2-dev libssl-dev \
+                libreadline-dev libncurses5-dev libsqlite3-dev \
+                libgdbm-dev libdb-dev libexpat-dev libpcap-dev \
+                liblzma-dev libpcre3-dev curl python-pip \
+                python3-dev python3-pip
 curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 echo '[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc' >> $HOME/.bashrc
 
 ## install Golang
-echo $1 | sudo -S add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
-echo $1 | sudo -S aptitude update
-echo $1 | sudo -S aptitude install -y golang
+echo $SUDO_PW | sudo -S add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
+echo $SUDO_PW | sudo -S aptitude update
+echo $SUDO_PW | sudo -S aptitude install -y golang
 
 ## install direnv
 git clone https://github.com/direnv/direnv $HOME/.cache/direnv
 cd $HOME/.cache/direnv
-echo $1 | sudo -S make install
+echo $SUDO_PW | sudo -S make install
 echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
 
 ## install pip and virtualenv
-pip install --upgrade pip
-echo $1 | sudo -S pip install --upgrade virtualenv
+pip3 install --upgrade pip3
+echo $SUDO_PW | sudo -S pip3 install --upgrade virtualenv
 pip3 install --upgrade --user neovim
 
+
+# add symbolic links
+NEOVIM_CONF=$(cd $(dirname $0)/../linux/dotfiles/.config/nvim && pwd)                                                                      
+TMUX_CONF=ln -s $(cd $(dirname $0)/../linux/dotfiles/ && pwd)/.tmux.conf 
+if [ -e $HOME/.config/nvim ]; then
+    rm -rf $HOME/.config/nvim
+fi
+if [ -e $HOME/.tmux.conf ]; then
+    rm $HOME/.config/tmux.conf
+fi
+ln -s $NEOVIM_CONF $HOME/.config/nvim
+ln -s $TMUX_CONF $HOME/.tmux.conf 
+
+
 # cleanup
-echo $1 | sudo -S aptitude autoclean
+cd $SCRIPT_DIR
+echo $SUDO_PW | sudo -S aptitude autoclean
 source ~/.bashrc
 source ~/.profile
 exec $SHELL
