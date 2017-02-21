@@ -71,7 +71,7 @@ echo $SUDO_PW | sudo -S make install
 echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
 
 ## install pip and virtualenv
-pip3 install --upgrade pip3
+pip install --upgrade pip
 echo $SUDO_PW | sudo -S pip3 install --upgrade virtualenv
 pip3 install --upgrade --user neovim
 
