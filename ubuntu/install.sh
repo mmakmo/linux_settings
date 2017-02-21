@@ -76,6 +76,7 @@ cd $SCRIPT_DIR
 
 ## install pip and virtualenv
 pip install --upgrade pip
+pip3 install --upgrade pip
 echo $SUDO_PW | sudo -S pip3 install --upgrade virtualenv
 pip3 install --upgrade --user neovim
 
