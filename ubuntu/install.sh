@@ -72,6 +72,7 @@ git clone https://github.com/direnv/direnv $HOME/.cache/direnv
 cd $HOME/.cache/direnv
 echo $SUDO_PW | sudo -S make install
 echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+cd $SCRIPT_DIR
 
 ## install pip and virtualenv
 pip install --upgrade pip
@@ -81,7 +82,7 @@ pip3 install --upgrade --user neovim
 
 # add symbolic links
 NEOVIM_CONF=$(cd $(dirname $0)/../linux/dotfiles/.config/nvim && pwd)                                                                      
-TMUX_CONF=ln -s $(cd $(dirname $0)/../linux/dotfiles/ && pwd)/.tmux.conf 
+TMUX_CONF=$(cd $(dirname $0)/../linux/dotfiles/ && pwd)/.tmux.conf 
 if [ -e $HOME/.config/nvim ]; then
     rm -rf $HOME/.config/nvim
 fi
@@ -93,7 +94,6 @@ ln -s $TMUX_CONF $HOME/.tmux.conf
 
 
 # cleanup
-cd $SCRIPT_DIR
 echo $SUDO_PW | sudo -S aptitude autoclean
 source ~/.bashrc
 source ~/.profile
