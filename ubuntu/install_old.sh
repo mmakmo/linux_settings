@@ -21,10 +21,10 @@ echo $1 | sudo -S aptitude install -y ssh tmux
 echo $1 | sudo -S aptitude install -y git bats vim
 
 # install neovim
-#echo $1 | sudo -S aptitude install -y software-properties-common
-#echo $1 | sudo -S add-apt-repository -y ppa:neovim-ppa/unstable
-#echo $1 | sudo -S aptitude update -y
-#echo $1 | sudo -S aptitude install -y neovim
+echo $1 | sudo -S aptitude install -y software-properties-common
+echo $1 | sudo -S add-apt-repository -y ppa:neovim-ppa/unstable
+echo $1 | sudo -S aptitude update -y
+echo $1 | sudo -S aptitude install -y neovim
 echo "export XDG_CONFIG_HOME=~/.config" >> $HOME/.profile
 
 # install python environments
@@ -48,9 +48,8 @@ echo $1 | sudo -S make install
 echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
 
 ## install pip and virtualenv
-pip install --upgrade pip
-pip install --upgrade virtualenv
-pip install --upgrade --user neovim
+echo $1 | sudo -S pip install --upgrade pip
+echo $1 | sudo -S pip install --upgrade virtualenv
 
 # cleanup
 echo $1 | sudo -S aptitude autoclean
