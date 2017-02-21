@@ -65,6 +65,9 @@ echo $SUDO_PW | sudo -S aptitude update
 echo $SUDO_PW | sudo -S aptitude install -y golang
 
 ## install direnv
+if [ -e $HOME/.cache/direnv ]; then
+    rm -rf $HOME/.cache/direnv
+fi
 git clone https://github.com/direnv/direnv $HOME/.cache/direnv
 cd $HOME/.cache/direnv
 echo $SUDO_PW | sudo -S make install
