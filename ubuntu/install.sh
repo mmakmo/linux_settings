@@ -79,7 +79,7 @@ pip install --upgrade pip
 pip3 install --upgrade pip
 echo $SUDO_PW | sudo -S pip3 install --upgrade virtualenv
 echo $SUDO_PW | sudo -S pip3 install --upgrade jedi
-echo $SUDO_PW | sudo -S pip3 install --pugrade yapf
+echo $SUDO_PW | sudo -S pip3 install --upgrade yapf
 pip3 install --upgrade --user neovim
 
 
