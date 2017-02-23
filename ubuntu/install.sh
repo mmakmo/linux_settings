@@ -38,8 +38,15 @@ echo $SUDO_PW | sudo -S aptitude install -y ssh tmux
 
 
 # install development tools
-echo $SUDO_PW | sudo -S aptitude install -y git bats vim
+echo $SUDO_PW | sudo -S aptitude install -y git bats vim mysql-client
 
+# install docker
+echo $SUDO_PW | sudo -S aptitude install -y apt-transport-https ca-certificates curl software-properties-common
+echo $SUDO_PW | curl -fsSL https://apt.dockerproject.org/gpg | sudo -S apt-key add -
+apt-key fingerprint 58118E89F3A912897C070ADBF76221572C52609D
+echo $SUDO_PW | sudo -S add-apt-repository "deb https://apt.dockerproject.org/repo/ ubuntu-$(lsb_release -cs) main"
+echo $SUDO_PW | sudo -S aptitude update
+echo $SUDO_PW | sudo -S aptitude install -y docker-engine
 
 # install neovim
 echo $SUDO_PW | sudo -S aptitude install -y software-properties-common
