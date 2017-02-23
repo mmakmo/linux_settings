@@ -84,13 +84,13 @@ pip3 install --upgrade --user neovim
 
 
 # add symbolic links
-NEOVIM_CONF=$(cd $(dirname $0)/../linux/dotfiles/.config/nvim && pwd)                                                                      
+NEOVIM_CONF=$(cd $(dirname $0)/../linux/dotfiles/.config/nvim && pwd)
 TMUX_CONF=$(cd $(dirname $0)/../linux/dotfiles/ && pwd)/.tmux.conf 
 if [ -e $HOME/.config/nvim ]; then
     rm -rf $HOME/.config/nvim
 fi
 if [ -e $HOME/.tmux.conf ]; then
-    rm $HOME/.config/tmux.conf
+    rm $HOME/.tmux.conf
 fi
 ln -s $NEOVIM_CONF $HOME/.config/nvim
 ln -s $TMUX_CONF $HOME/.tmux.conf 
