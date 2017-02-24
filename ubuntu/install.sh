@@ -38,7 +38,7 @@ echo $SUDO_PW | sudo -S aptitude install -y ssh tmux
 
 
 # install development tools
-echo $SUDO_PW | sudo -S aptitude install -y git bats vim mysql-client
+echo $SUDO_PW | sudo -S aptitude install -y git bats vim mysql-client libmysqlclient-dev
 
 # install docker
 echo $SUDO_PW | sudo -S aptitude install -y apt-transport-https ca-certificates curl software-properties-common
