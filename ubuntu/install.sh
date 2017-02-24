@@ -40,6 +40,12 @@ echo $SUDO_PW | sudo -S aptitude install -y ssh tmux
 # install development tools
 echo $SUDO_PW | sudo -S aptitude install -y git bats vim mysql-client libmysqlclient-dev
 
+# install MongoDB
+echo $SUDO_PW | sudo -S apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+echo $SUDO_PW | echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo -S tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+echo $SUDO_PW | sudo -S aptitude update
+echo $SUDO_PW | sudo aptitude install -y mongodb-org
+
 # install docker
 echo $SUDO_PW | sudo -S aptitude install -y apt-transport-https ca-certificates curl software-properties-common
 echo $SUDO_PW | curl -fsSL https://apt.dockerproject.org/gpg | sudo -S apt-key add -
