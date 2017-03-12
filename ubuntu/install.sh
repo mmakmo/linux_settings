@@ -71,6 +71,12 @@ echo $SUDO_PW | sudo -S add-apt-repository -y ppa:ubuntu-lxc/lxd-stable
 echo $SUDO_PW | sudo -S aptitude update
 echo $SUDO_PW | sudo -S aptitude install -y golang
 
+## install forego
+wget https://bin.equinox.io/c/ekMN3bCZFUn/forgo-stable-linux-amd64.deb
+echo $SUDO_PW | sudo -S dpkg -i forgo-stable-linux-amd64.deb
+rm forgo-stable-linux-amd64.deb
+
+
 ## install direnv
 if [ -e $HOME/.cache/direnv ]; then
     rm -rf $HOME/.cache/direnv
@@ -88,7 +94,7 @@ echo $SUDO_PW | sudo -S pip3 install --upgrade virtualenv
 echo $SUDO_PW | sudo -S pip3 install --upgrade jedi
 echo $SUDO_PW | sudo -S pip3 install --upgrade yapf
 pip3 install --upgrade --user neovim
-
+pip3 install --upgrade ipython
 
 # add symbolic links
 NEOVIM_CONF=$(cd $(dirname $0)/../linux/dotfiles/.config/nvim && pwd)
