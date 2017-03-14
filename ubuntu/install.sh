@@ -36,7 +36,6 @@ echo $SUDO_PW | sudo -S aptitude update -y
 echo $SUDO_PW | sudo -S aptitude upgrade -y
 echo $SUDO_PW | sudo -S aptitude install -y ssh tmux
 
-
 # install development tools
 echo $SUDO_PW | sudo -S aptitude install -y git bats vim mysql-client libmysqlclient-dev
 
@@ -54,7 +53,6 @@ echo $SUDO_PW | sudo -S add-apt-repository -y ppa:neovim-ppa/unstable
 echo $SUDO_PW | sudo -S aptitude update -y
 echo $SUDO_PW | sudo -S aptitude install -y neovim
 echo "export XDG_CONFIG_HOME=~/.config" >> $HOME/.profile
-
 
 # install python environments
 echo $SUDO_PW | sudo -S aptitude install -y \
@@ -76,7 +74,6 @@ wget https://bin.equinox.io/c/ekMN3bCZFUn/forgo-stable-linux-amd64.deb
 echo $SUDO_PW | sudo -S dpkg -i forgo-stable-linux-amd64.deb
 rm forgo-stable-linux-amd64.deb
 
-
 ## install direnv
 if [ -e $HOME/.cache/direnv ]; then
     rm -rf $HOME/.cache/direnv
@@ -95,6 +92,10 @@ echo $SUDO_PW | sudo -S pip3 install --upgrade jedi
 echo $SUDO_PW | sudo -S pip3 install --upgrade yapf
 pip3 install --upgrade --user neovim
 pip3 install --upgrade ipython
+
+# install rbenv
+echo $SUDO_PW | sudo -S aptitude install rbenv ruby-build ruby-bundler
+echo '[[ -d ~/.rbenv  ]] && export PATH=${HOME}/.rbenv/bin:${PATH} && eval "$(rbenv init -)"' >> $HOME/.bashrc
 
 # add symbolic links
 NEOVIM_CONF=$(cd $(dirname $0)/../linux/dotfiles/.config/nvim && pwd)
